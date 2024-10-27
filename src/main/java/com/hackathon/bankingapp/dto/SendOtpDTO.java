@@ -5,7 +5,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class PasswordResetDTO {
+public class SendOtpDTO {
 
     private String identifier;
 
