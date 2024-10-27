@@ -21,7 +21,4 @@ public class InvalidToken {
     public InvalidToken(String token) {
         this.token = token;
     }
-
-    public InvalidToken(){
-    }
 }
