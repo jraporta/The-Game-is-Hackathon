@@ -29,8 +29,8 @@ public class PasswordResetService {
 
     public void resetPassword(String email) {
         if (!userRepository.existsByEmail(email)) throw new NonExistingIdentifierException("");
-        OneTimePassword oldOneTimePassword = oneTimePasswordRepository.findByEmail(email);
-        if (oldOneTimePassword != null ) oneTimePasswordRepository.delete(oldOneTimePassword);
+        //OneTimePassword oldOtp = oneTimePasswordRepository.findByEmail(email);
+        //if (oldOtp != null ) oneTimePasswordRepository.delete(oldOtp);
         int oneTimePassword = (int) (Math.random() * 100000);
         oneTimePasswordRepository.save(new OneTimePassword(email, Integer.toString(oneTimePassword)));
         sendMail(email, "Password Reset", "OTP:" + oneTimePassword);
