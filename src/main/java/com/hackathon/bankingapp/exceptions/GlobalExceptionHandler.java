@@ -28,6 +28,9 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Bad credentials");
     }
 
-
+    @ExceptionHandler(NonExistingIdentifierException.class)
+    public ResponseEntity<String> handleIdentifierNotExists(NonExistingIdentifierException ex){
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex.getMessage());
+    }
 
 }
