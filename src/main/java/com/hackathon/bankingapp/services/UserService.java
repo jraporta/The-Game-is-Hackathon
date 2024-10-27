@@ -6,16 +6,16 @@ import com.hackathon.bankingapp.exceptions.EmailAlreadyExistsException;
 import com.hackathon.bankingapp.exceptions.PhoneNumberAlreadyExistsException;
 import com.hackathon.bankingapp.repositories.UserRepository;
 import jakarta.validation.Valid;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
 public class UserService {
 
     private UserRepository userRepository;
-    private BCryptPasswordEncoder passwordEncoder;
+    private PasswordEncoder passwordEncoder;
 
-    public UserService(UserRepository userRepository, BCryptPasswordEncoder passwordEncoder){
+    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder){
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
     }
