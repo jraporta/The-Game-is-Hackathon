@@ -32,8 +32,4 @@ public class PasswordResetController {
                 passwordResetService.verifyOTP(verifyOtpDTO.getIdentifier(), verifyOtpDTO.getOtp()));
     }
 
-    @PostMapping("/auth/password-reset")
-    public ResponseEntity<String> changePassword(){
-        return ResponseEntity.ok("");
-    }
 }
