@@ -26,7 +26,6 @@ public class PasswordResetController {
                 "OTP sent successfully to: " + passwordResetDTO.getIdentifier()));
     }
 
-    /*
     @PostMapping("/auth/password-reset/verify-otp")
     public ResponseEntity<PasswordResetTokenDTO> verifyOTP(@RequestBody VerifyOtpDTO verifyOtpDTO){
         return ResponseEntity.ok(
@@ -37,6 +36,4 @@ public class PasswordResetController {
     public ResponseEntity<String> changePassword(){
         return ResponseEntity.ok("");
     }
-
-     */
 }
