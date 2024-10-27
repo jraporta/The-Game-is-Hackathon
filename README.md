@@ -615,6 +615,10 @@ This task focuses on advanced features such as creating automatic subscriptions 
 
 ### Endpoints Table
 
+**crear PIN y update PIN. Los endpoints son los siguientes:**
+`/api/account/pin/create`
+`/api/account/pin/update`
+
 | Endpoint                                    | Method | Params/Body                                                 | Requires Auth | Response Codes                              | Description                                                                                 |
 |---------------------------------------------|--------|--------------------------------------------------------------|---------------|---------------------------------------------|---------------------------------------------------------------------------------------------|
 | `/api/users/register`                       | POST   | `{ name, password, email, address, phoneNumber, countryCode }`| No            | 200, 400 ("Email already exists", "Phone number already exists") | Registers a new user.                                                                       |

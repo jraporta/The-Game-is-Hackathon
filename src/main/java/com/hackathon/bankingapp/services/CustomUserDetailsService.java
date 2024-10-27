@@ -28,7 +28,7 @@ public class CustomUserDetailsService implements UserDetailsService {
         if (user == null){
             user = userRepository.findByAccountNumber(username);
         }
-        if (user == null) throw new UsernameNotFoundException("User not found with identifier: " + username);
+        if (user == null) throw new UsernameNotFoundException("User not found for the given identifier: " + username);
 
         List<GrantedAuthority> authorities = List.of(new SimpleGrantedAuthority("ROLE_USER"));
 
