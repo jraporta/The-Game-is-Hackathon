@@ -1,5 +1,6 @@
 package com.hackathon.bankingapp.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -24,4 +25,7 @@ public class User {
     private String accountNumber;
 
     private String hashedPassword;
+
+    @JsonIgnore
+    private String pin;
 }

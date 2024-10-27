@@ -33,4 +33,9 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex.getMessage());
     }
 
+    @ExceptionHandler(UserAlreadyHasPinException.class)
+    public ResponseEntity<String> handleUserAlreadyHasPin(UserAlreadyHasPinException ex){
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex.getMessage());
+    }
+
 }
