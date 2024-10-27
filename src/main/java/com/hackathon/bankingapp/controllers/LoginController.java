@@ -3,6 +3,7 @@ package com.hackathon.bankingapp.controllers;
 import com.hackathon.bankingapp.dto.JwtTokenDTO;
 import com.hackathon.bankingapp.dto.LoginDTO;
 import com.hackathon.bankingapp.utils.JwtUtil;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+@Slf4j
 @RestController
 public class LoginController {
 
@@ -30,7 +32,9 @@ public class LoginController {
         UserDetails userDetails = userDetailsService.loadUserByUsername(credentials.getIdentifier());
         authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(credentials.getIdentifier(), credentials.getPassword()));
-        return ResponseEntity.ok(new JwtTokenDTO(jwtUtil.generateToken((userDetails.getUsername()))));
+        String token = jwtUtil.generateToken((userDetails.getUsername()));
+        log.info("created token for: {}", jwtUtil.extractUsername(token));
+        return ResponseEntity.ok(new JwtTokenDTO(token));
     }
 
 

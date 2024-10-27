@@ -33,6 +33,6 @@ public class CustomUserDetailsService implements UserDetailsService {
         List<GrantedAuthority> authorities = List.of(new SimpleGrantedAuthority("ROLE_USER"));
 
         return new org.springframework.security.core.userdetails.User(
-                username, user.getHashedPassword(), authorities);
+                user.getAccountNumber(), user.getHashedPassword(), authorities);
     }
 }

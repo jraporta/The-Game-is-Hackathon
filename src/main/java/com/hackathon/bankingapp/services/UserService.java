@@ -35,4 +35,8 @@ public class UserService {
         user.setHashedPassword(passwordEncoder.encode(userDTO.getPassword()));
         return userRepository.save(user);
     }
+
+    public User getUser(String accountNumber) {
+        return userRepository.findByAccountNumber(accountNumber);
+    }
 }
