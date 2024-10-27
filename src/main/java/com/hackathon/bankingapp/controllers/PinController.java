@@ -34,8 +34,12 @@ public class PinController {
 
 
     @PostMapping("/api/account/pin/update")
-    public void updatePin(@RequestBody PinUpdateDTO pinUpdateDTO){
-        System.out.println("He recibido un pin " + pinUpdateDTO.getNewPin());
+    public ResponseEntity<Map<String, String>> updatePin(@Valid @RequestBody PinUpdateDTO pinUpdateDTO,
+                                                         @AuthenticationPrincipal UserDetails userDetails){
+        pinService.updatePin(userDetails.getUsername(), pinUpdateDTO);
+        Map<String, String> response = new HashMap<>();
+        response.put("msg", "PIN updated successfully");
+        return ResponseEntity.ok(response);
     }
 
 }
