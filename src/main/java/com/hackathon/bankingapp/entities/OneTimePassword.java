@@ -10,18 +10,21 @@ import lombok.Setter;
 @Getter
 @Setter
 @Entity
-public class InvalidToken {
+public class OneTimePassword {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    private String token;
+    private String email;
 
-    public InvalidToken(String token) {
-        this.token = token;
+    private String otp;
+
+    public OneTimePassword(String email, String otp) {
+        this.email = email;
+        this.otp = otp;
     }
 
-    public InvalidToken(){
+    public OneTimePassword(){
     }
 }
