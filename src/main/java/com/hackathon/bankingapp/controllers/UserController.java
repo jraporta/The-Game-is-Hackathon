@@ -13,12 +13,12 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api")
-public class Controller {
+public class UserController {
 
     private UserService userService;
     private BlacklistService blacklistService;
 
-    public Controller(UserService userService, BlacklistService blacklistService){
+    public UserController(UserService userService, BlacklistService blacklistService){
         this.userService = userService;
         this.blacklistService = blacklistService;
     }
