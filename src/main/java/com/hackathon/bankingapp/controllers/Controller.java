@@ -1,5 +1,6 @@
 package com.hackathon.bankingapp.controllers;
 
+import com.hackathon.bankingapp.dto.AccountDTO;
 import com.hackathon.bankingapp.dto.UserDTO;
 import com.hackathon.bankingapp.entities.User;
 import com.hackathon.bankingapp.services.UserService;
@@ -28,6 +29,11 @@ public class Controller {
     @GetMapping("/dashboard/user")
     public ResponseEntity<User> getLoggedUserDetails(@AuthenticationPrincipal UserDetails userDetails){
         return ResponseEntity.ok(userService.getUser(userDetails.getUsername()));
+    }
+
+    @GetMapping("/dashboard/account")
+    public ResponseEntity<AccountDTO> getAccountInfo(@AuthenticationPrincipal UserDetails userDetails){
+        return ResponseEntity.ok(userService.getAccountInfo(userDetails.getUsername()));
     }
 
 

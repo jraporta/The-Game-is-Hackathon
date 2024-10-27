@@ -1,5 +1,6 @@
 package com.hackathon.bankingapp.services;
 
+import com.hackathon.bankingapp.dto.AccountDTO;
 import com.hackathon.bankingapp.dto.UserDTO;
 import com.hackathon.bankingapp.entities.User;
 import com.hackathon.bankingapp.exceptions.EmailAlreadyExistsException;
@@ -8,6 +9,8 @@ import com.hackathon.bankingapp.repositories.UserRepository;
 import jakarta.validation.Valid;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import java.math.BigDecimal;
 
 @Service
 public class UserService {
@@ -38,5 +41,13 @@ public class UserService {
 
     public User getUser(String accountNumber) {
         return userRepository.findByAccountNumber(accountNumber);
+    }
+
+    public AccountDTO getAccountInfo(String accountNumber) {
+        User user = getUser(accountNumber);
+        AccountDTO accountDTO = new AccountDTO();
+        accountDTO.setAccountNumber(user.getAccountNumber());
+        accountDTO.setBalance(new BigDecimal(0));
+        return accountDTO;
     }
 }
