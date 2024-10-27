@@ -47,7 +47,7 @@ public class PasswordResetService {
     public PasswordResetTokenDTO verifyOTP(String email, String otp) {
         OneTimePassword oneTimePassword = oneTimePasswordRepository.findByEmail(email);
         if (oneTimePassword != null && oneTimePassword.getOtp().equals(otp)){
-            //oneTimePasswordRepository.delete(oneTimePassword);
+            oneTimePasswordRepository.delete(oneTimePassword);
             return new PasswordResetTokenDTO(jwtUtil.generateToken(email));
         }
         throw new InvalidOtpException("Invalid OTP");
