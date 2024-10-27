@@ -1,5 +1,6 @@
 package com.hackathon.bankingapp.security;
 
+import com.hackathon.bankingapp.services.BlacklistService;
 import com.hackathon.bankingapp.utils.JwtUtil;
 import io.jsonwebtoken.JwtException;
 import jakarta.servlet.FilterChain;
@@ -25,10 +26,12 @@ public class JwtRequestFilter extends OncePerRequestFilter {
 
     private JwtUtil jwtUtil;
     private UserDetailsService userDetailsService;
+    private BlacklistService blacklistService;
 
-    public JwtRequestFilter(JwtUtil jwtUtil, UserDetailsService userDetailsService) {
+    public JwtRequestFilter(JwtUtil jwtUtil, UserDetailsService userDetailsService, BlacklistService blacklistService) {
         this.jwtUtil = jwtUtil;
         this.userDetailsService = userDetailsService;
+        this.blacklistService = blacklistService;
     }
 
     @Override
@@ -41,14 +44,16 @@ public class JwtRequestFilter extends OncePerRequestFilter {
 
         if (authorizationHeader != null && authorizationHeader.startsWith(("Bearer "))){
             jwt = authorizationHeader.substring(7);
-            try{
-                username = jwtUtil.extractUsername(jwt);
-                log.info("Received an authenticated request from: {}", username);
-            } catch (JwtException e) {
-                log.warn("Invalid JWT: {}", e.getMessage());
-                response.setStatus(HttpStatus.UNAUTHORIZED.value());
-                response.getWriter().write("Access Denied");
-                return;
+            if (blacklistService.tokenIsValid(jwt)) {
+                try {
+                    username = jwtUtil.extractUsername(jwt);
+                    log.info("Received an authenticated request from: {}", username);
+                } catch (JwtException e) {
+                    log.warn("Invalid JWT: {}", e.getMessage());
+                    response.setStatus(HttpStatus.UNAUTHORIZED.value());
+                    response.getWriter().write("Access Denied");
+                    return;
+                }
             }
         }
 

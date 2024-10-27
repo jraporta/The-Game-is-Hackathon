@@ -3,6 +3,7 @@ package com.hackathon.bankingapp.controllers;
 import com.hackathon.bankingapp.dto.AccountDTO;
 import com.hackathon.bankingapp.dto.UserDTO;
 import com.hackathon.bankingapp.entities.User;
+import com.hackathon.bankingapp.services.BlacklistService;
 import com.hackathon.bankingapp.services.UserService;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
@@ -15,9 +16,11 @@ import org.springframework.web.bind.annotation.*;
 public class Controller {
 
     private UserService userService;
+    private BlacklistService blacklistService;
 
-    public Controller(UserService userService){
+    public Controller(UserService userService, BlacklistService blacklistService){
         this.userService = userService;
+        this.blacklistService = blacklistService;
     }
 
     @PostMapping("/users/register")
@@ -36,8 +39,11 @@ public class Controller {
         return ResponseEntity.ok(userService.getAccountInfo(userDetails.getUsername()));
     }
 
-
-
-
+    @GetMapping("/users/logout")
+    public ResponseEntity<String> logout(@RequestHeader("Authorization") String authHeader){
+        String token = authHeader.substring(7);
+        blacklistService.addToken(token);
+        return ResponseEntity.ok("");
+    }
 
 }
