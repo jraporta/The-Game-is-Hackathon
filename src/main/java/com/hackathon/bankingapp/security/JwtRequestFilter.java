@@ -44,16 +44,16 @@ public class JwtRequestFilter extends OncePerRequestFilter {
 
         if (authorizationHeader != null && authorizationHeader.startsWith(("Bearer "))){
             jwt = authorizationHeader.substring(7);
-            if (blacklistService.tokenIsValid(jwt)) {
+            boolean jwtIsValid = blacklistService.tokenIsValid(jwt);
+            if (jwtIsValid) {
                 try {
                     username = jwtUtil.extractUsername(jwt);
                     log.info("Received an authenticated request from: {}", username);
                 } catch (JwtException e) {
                     log.warn("Invalid JWT: {}", e.getMessage());
-                    response.setStatus(HttpStatus.UNAUTHORIZED.value());
-                    response.getWriter().write("Access Denied");
-                    return;
                 }
+            }else {
+                log.warn("Invalid JWT: jwt present in blacklist.");
             }
         }
 
@@ -66,6 +66,11 @@ public class JwtRequestFilter extends OncePerRequestFilter {
                 authToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
                 SecurityContextHolder.getContext().setAuthentication(authToken);
             }
+        }
+        if (username == null){
+            response.setStatus(HttpStatus.UNAUTHORIZED.value());
+            response.getWriter().write("Access Denied");
+            return;
         }
         filterChain.doFilter(request, response);
     }
