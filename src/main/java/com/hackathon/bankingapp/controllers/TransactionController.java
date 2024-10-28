@@ -1,5 +1,8 @@
 package com.hackathon.bankingapp.controllers;
 
+import com.hackathon.bankingapp.dto.DepositDTO;
+import com.hackathon.bankingapp.services.TransactionService;
+import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -12,9 +15,16 @@ import java.util.Map;
 @RequestMapping("/api")
 public class TransactionController {
 
-    @PostMapping("/account/deposit")
-    public ResponseEntity<Map<String, String>> deposit(@AuthenticationPrincipal UserDetails userDetails){
+    private TransactionService transactionService;
 
+    public TransactionController(TransactionService transactionService) {
+        this.transactionService = transactionService;
+    }
+
+    @PostMapping("/account/deposit")
+    public ResponseEntity<Map<String, String>> deposit(@AuthenticationPrincipal UserDetails userDetails,
+                                                       @Valid @RequestBody DepositDTO depositDTO){
+        transactionService.deposit(userDetails.getUsername(), depositDTO);
         Map<String, String> response = new HashMap<>();
         response.put("msg", "Cash deposited successfully");
         return ResponseEntity.ok(response);

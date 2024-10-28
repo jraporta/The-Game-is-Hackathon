@@ -11,6 +11,6 @@ public class AccountDTO {
 
     private String accountNumber;
 
-    private BigDecimal balance;
+    private BigDecimal balance = new BigDecimal(0);
 
 }
