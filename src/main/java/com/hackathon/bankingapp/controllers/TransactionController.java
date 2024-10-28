@@ -1,6 +1,7 @@
 package com.hackathon.bankingapp.controllers;
 
 import com.hackathon.bankingapp.dto.DepositDTO;
+import com.hackathon.bankingapp.dto.FundTransferDTO;
 import com.hackathon.bankingapp.dto.WithdrawalDTO;
 import com.hackathon.bankingapp.services.TransactionService;
 import jakarta.validation.Valid;
@@ -41,8 +42,9 @@ public class TransactionController {
     }
 
     @PostMapping("/account/fund-transfer")
-    public ResponseEntity<Map<String, String>> fundTransfer(@AuthenticationPrincipal UserDetails userDetails){
-
+    public ResponseEntity<Map<String, String>> fundTransfer(@AuthenticationPrincipal UserDetails userDetails,
+                                                            @Valid @RequestBody FundTransferDTO fundTransferDTO){
+        transactionService.fundTransfer(userDetails.getUsername(), fundTransferDTO);
         Map<String, String> response = new HashMap<>();
         response.put("msg", "Fund transferred successfully");
         return ResponseEntity.ok(response);
