@@ -68,4 +68,9 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("");
     }
 
+    @ExceptionHandler(FormatException.class)
+    public ResponseEntity<String> handleInvalidFormat(FormatException ex){
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex.getMessage());
+    }
+
 }

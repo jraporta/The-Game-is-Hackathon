@@ -8,6 +8,7 @@ import com.hackathon.bankingapp.exceptions.EmailAlreadyExistsException;
 import com.hackathon.bankingapp.exceptions.PhoneNumberAlreadyExistsException;
 import com.hackathon.bankingapp.repositories.AccountRepository;
 import com.hackathon.bankingapp.repositories.UserRepository;
+import com.hackathon.bankingapp.utils.PasswordFormatValidator;
 import jakarta.validation.Valid;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -20,12 +21,14 @@ public class UserService {
     private UserRepository userRepository;
     private PasswordEncoder passwordEncoder;
     private AccountRepository accountRepository;
+    private PasswordFormatValidator passwordFormatValidator;
 
     public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder,
-                       AccountRepository accountRepository) {
+                       AccountRepository accountRepository, PasswordFormatValidator passwordFormatValidator) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
         this.accountRepository = accountRepository;
+        this.passwordFormatValidator = passwordFormatValidator;
     }
 
     public User registerUser(@Valid UserDTO userDTO) {
@@ -35,6 +38,8 @@ public class UserService {
         if (userRepository.existsByPhoneNumber(userDTO.getPhoneNumber())) {
             throw new PhoneNumberAlreadyExistsException("Phone number already exists");
         }
+        passwordFormatValidator.setPassword(userDTO.getPassword());
+        passwordFormatValidator.validate();
         User user = saveUser(userDTO);
         createAccount(user);
         return user;
