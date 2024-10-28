@@ -3,6 +3,7 @@ package com.hackathon.bankingapp.controllers;
 import com.hackathon.bankingapp.dto.DepositDTO;
 import com.hackathon.bankingapp.dto.FundTransferDTO;
 import com.hackathon.bankingapp.dto.WithdrawalDTO;
+import com.hackathon.bankingapp.entities.Transaction;
 import com.hackathon.bankingapp.services.TransactionService;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
@@ -11,6 +12,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -50,13 +52,12 @@ public class TransactionController {
         return ResponseEntity.ok(response);
     }
 
-    /*
-    @PostMapping("/account/transactions")
-    public void transactions(@AuthenticationPrincipal UserDetails userDetails){
-
+    @GetMapping("/account/transactions")
+    public ResponseEntity<List<Transaction>> transactions(@AuthenticationPrincipal UserDetails userDetails){
+        return ResponseEntity.ok(transactionService.getTransactions(userDetails.getUsername()));
     }
 
-     */
+
 
 
 

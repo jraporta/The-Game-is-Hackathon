@@ -17,7 +17,9 @@ import jakarta.validation.Valid;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @Service
 public class TransactionService {
@@ -97,5 +99,12 @@ public class TransactionService {
     private void addTransaction(Account account, Transaction transaction) {
         account.getTransactions().add(transaction);
         accountRepository.save((account));
+    }
+
+    public List<Transaction> getTransactions(String accountNumber) {
+        Account account = accountRepository.findByUser(userRepository.findByAccountNumber(accountNumber));
+        List<Transaction> transactions = new ArrayList<Transaction>(account.getTransactions());
+        transactions.sort((a,b)->a.getTransactionDate().compareTo(b.getTransactionDate()));
+        return transactions;
     }
 }
