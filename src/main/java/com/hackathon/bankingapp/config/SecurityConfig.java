@@ -60,14 +60,14 @@ public class SecurityConfig{
     public SecurityFilterChain permittedFilterChain(HttpSecurity http) throws Exception {
         http
                 .csrf(AbstractHttpConfigurer::disable)
-                .securityMatcher("/api/users/login",
-                        "/api/users/register",
-                        "/api/auth/password-reset/send-otp",
-                        "/api/auth/password-reset/verify-otp",
-                        "/api/auth/password-reset",
-                        "/market/prices/**")
                 .authorizeHttpRequests(auth -> auth
-                        .anyRequest()
+                        .requestMatchers(
+                                "/api/users/login",
+                                "/api/users/register",
+                                "/api/auth/password-reset/send-otp",
+                                "/api/auth/password-reset/verify-otp",
+                                "/api/auth/password-reset",
+                                "/market/prices/**")
                         .permitAll())
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
         return http.build();

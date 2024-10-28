@@ -3,6 +3,5 @@ target/*
 .vscode/
 .idea/
 
-!target/bankingapp-0.0.1-SNAPSHOT.jar
 
 **/*~undo-tree~*

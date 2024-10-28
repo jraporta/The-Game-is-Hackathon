@@ -63,4 +63,9 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex.getMessage());
     }
 
+    @ExceptionHandler(UnknownSymbolException.class)
+    public ResponseEntity<String> handleInvalidPin(UnknownSymbolException ex){
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("");
+    }
+
 }
