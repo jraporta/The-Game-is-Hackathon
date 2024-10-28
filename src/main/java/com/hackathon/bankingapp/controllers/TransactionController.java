@@ -1,6 +1,7 @@
 package com.hackathon.bankingapp.controllers;
 
 import com.hackathon.bankingapp.dto.DepositDTO;
+import com.hackathon.bankingapp.dto.WithdrawalDTO;
 import com.hackathon.bankingapp.services.TransactionService;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
@@ -31,8 +32,9 @@ public class TransactionController {
     }
 
     @PostMapping("/account/withdraw")
-    public ResponseEntity<Map<String, String>> withdraw(@AuthenticationPrincipal UserDetails userDetails){
-
+    public ResponseEntity<Map<String, String>> withdraw(@AuthenticationPrincipal UserDetails userDetails,
+                                                        @Valid @RequestBody WithdrawalDTO withdrawalDTO){
+        transactionService.withdraw(userDetails.getUsername(), withdrawalDTO);
         Map<String, String> response = new HashMap<>();
         response.put("msg", "Cash withdrawn successfully");
         return ResponseEntity.ok(response);
