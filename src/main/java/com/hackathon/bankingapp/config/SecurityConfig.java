@@ -64,7 +64,8 @@ public class SecurityConfig{
                         "/api/users/register",
                         "/api/auth/password-reset/send-otp",
                         "/api/auth/password-reset/verify-otp",
-                        "/api/auth/password-reset")
+                        "/api/auth/password-reset",
+                        "/market/prices/**")
                 .authorizeHttpRequests(auth -> auth
                         .anyRequest()
                         .permitAll())
